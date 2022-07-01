@@ -59,7 +59,8 @@ public class Main {
 						try {
 							LocalDate data = LocalDate.of(anno, mese, giorno);
 							Conferenza conferenza = new Conferenza(titolo, data, postiTotali, argomento, oratore);
-							System.out.println(conferenza.toString());
+							datiValidi = true;
+							System.out.println(conferenza);
 						} catch (NumberFormatException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
