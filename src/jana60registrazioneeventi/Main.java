@@ -26,7 +26,7 @@ public class Main {
 			
 			do {
 				
-				try {
+				
 					//titolo
 					System.out.println("Dai un nome all'evento: ");
 					String titolo = sc.nextLine();
@@ -43,21 +43,55 @@ public class Main {
 					System.out.println("stabilisci i posti totali: ");
 					int postiTotali = Integer.parseInt(sc.nextLine());
 					
-					//creo evento
-					LocalDate data = LocalDate.of(anno, mese, giorno);
-					evento = new Evento(titolo, data, postiTotali);
-					datiValidi= true;
-			
-			
+					//chiedo se è una conferenza 
+					System.out.println("l'evento che stai orgaizzando è una conferenza?");
+					String scelta = sc.nextLine();
+					if(scelta.equalsIgnoreCase("si")){
+						System.out.println("qual'è l'argomento della conferenza? ");
+						String argomento = sc.nextLine();
+						System.out.println("chi è l'oratore?");
+						String nome = sc.nextLine();
+						System.out.println("qual'è il suo cognome?");
+						String cognome = sc.nextLine();
+						System.out.println("che titolo ha?");
+						String titoloOratore = sc.nextLine();
+						Oratore oratore = new Oratore(nome, cognome, titoloOratore);
+						try {
+							LocalDate data = LocalDate.of(anno, mese, giorno);
+							Conferenza conferenza = new Conferenza(titolo, data, postiTotali, argomento, oratore);
+							System.out.println(conferenza.toString());
+						} catch (NumberFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IllegalArgumentException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							//stampo conferenza 
+						} 
+						
+					}
+					
+					else {
+						try {
+						//creo evento
+						LocalDate data = LocalDate.of(anno, mese, giorno);
+						evento = new Evento(titolo, data, postiTotali);
+						datiValidi= true;
 					} catch (NumberFormatException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IllegalArgumentException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} 
-	}while (!datiValidi);
+					}
 			
+			
+	
+			
+					}
+							
+					}while (!datiValidi);
+					
 			do {
 				try {
 					int scelta = 0;
