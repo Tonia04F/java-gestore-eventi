@@ -28,23 +28,26 @@ Aggiungere eventuali metodi (public e private) che vi aiutino a svolgere le funz
 	 private LocalDate dataEvento;
 	 private int postiTotali;
 	 private int postiPrenotati = 0;
+	 private LocalDate data;
 	 private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	 
 	 //costruttore
-	public Evento(String titolo, LocalDate dataEvento, int postiTotali) throws IllegalArgumentException {
+	public Evento(String titolo, LocalDate dataEvento, int postiTotali ) throws IllegalArgumentException,NumberFormatException {
 		super();
 		
 		this.titolo = titolo;
 		this.dataEvento = dataEvento;
 		this.postiTotali = postiTotali;
+		this.data = data;
 		//inizializzo a 0 perchè ad ogni evento sono aggiunte un tot di persone
 		this.postiPrenotati = 0;
 		
 		validaData();
 		prenota();
 		disdici();
-		
+		validaCapienza();
+		postiRimasti();
 	}
 
 	public String getTitolo() {
@@ -78,9 +81,10 @@ Aggiungere eventuali metodi (public e private) che vi aiutino a svolgere le funz
 			throw  new IllegalArgumentException("la data inserita non può essere un giorno già passato");
 		}
 	}
+	
+	int posti;
 	 
 	 public int prenota() {
-		 
 		//valido posti, controllo che ci siano posti disponibili
 			if(postiTotali < postiPrenotati) {
 				throw new IllegalArgumentException("non ci sono più posti disponibili.");
@@ -91,13 +95,22 @@ Aggiungere eventuali metodi (public e private) che vi aiutino a svolgere le funz
 	public int disdici() {
 		
 			if(postiPrenotati <= 0) {
-				throw new IllegalArgumentException("non ci sono prenotazioni per questo evento");
+				throw new NumberFormatException("non ci sono prenotazioni per questo evento");
 			}
 			return postiPrenotati -= 1;
 		
 	 }
-	
-	
+	public void validaCapienza() {
+		
+		if(postiTotali > 5 ) {
+			throw new NumberFormatException("non ci sono posti disponibili");
+
+		}
+		
+	}
+	public int postiRimasti() {
+		return postiTotali - postiPrenotati;
+	}
 
 	@Override
 	public String toString() {
